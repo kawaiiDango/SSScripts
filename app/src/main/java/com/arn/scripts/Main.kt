@@ -11,6 +11,7 @@ import android.provider.Settings
 import android.provider.Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS
 import android.text.TextUtils
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.BufferedReader
@@ -43,30 +44,24 @@ class Main : Activity() {
         super.onPostCreate(savedInstanceState)
 
         pref = PreferenceManager.getDefaultSharedPreferences(this)
-        btn_dummy.setOnClickListener{
-            runAsRoot(this, FAST_CHARGE)
-            checkNotificationAccess()
-            finish()
-        }
-        if(isAccessibilityEnabled(BuildConfig.APPLICATION_ID + "/." + MyAccessibilityService::class.java.simpleName)) {
-            btn_acc.isChecked = true
-        } else {
-            btn_acc.isChecked = false
-        }
 
         btn_acc.setOnClickListener{
-            startActivityForResult(Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS), 0)
+            if (!btn_acc.isChecked)
+                sendBroadcast(Intent(Main.DA_BROADCAST).putExtra("extra", DIE))
+            else
+                startActivityForResult(Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS), 0)
         }
         normal_dpi_bar.currentValue = pref.getInt("normal_dpi", 0)
         split_dpi_bar.currentValue = pref.getInt("split_dpi", 0)
 
         runAsRoot(this, "echo")
-//        finish()
     }
 
     override fun onResume() {
         super.onResume()
         current_dpi.text = "Current DPI: " + resources.displayMetrics.densityDpi
+        btn_acc.isChecked = isAccessibilityEnabled(BuildConfig.APPLICATION_ID + "/." + MyAccessibilityService::class.java.simpleName)
+
     }
 
     override fun onPause(){
@@ -78,21 +73,10 @@ class Main : Activity() {
                 .apply()
     }
 
-    private fun checkNotificationAccess() {
-        val pkgName = packageName
-        val flat = Settings.Secure.getString(contentResolver,"enabled_notification_listeners")
-        if (!TextUtils.isEmpty(flat)) {
-            val names = flat.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            for (i in names.indices) {
-                val cn = ComponentName.unflattenFromString(names[i])
-                if (cn != null) {
-                    if (TextUtils.equals(pkgName, cn.packageName)) {
-                        return
-                    }
-                }
-            }
-        }
-        startActivity(Intent(ACTION_NOTIFICATION_LISTENER_SETTINGS))
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home)
+            onBackPressed()
+        return super.onOptionsItemSelected(item)
     }
 
     private fun isAccessibilityEnabled(id: String): Boolean {
@@ -109,6 +93,8 @@ class Main : Activity() {
 
         val FAST_CHARGE = "chmod +w /sys/class/power_supply/usb/current_max\n" +
                 "echo 1800000 > /sys/class/power_supply/usb/current_max"
+        val DA_BROADCAST = "com.arn.scripts.br"
+        val DIE = -1
 
         fun runAsRoot(context:Context, s:String){
             val p: Process

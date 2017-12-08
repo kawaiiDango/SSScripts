@@ -22,16 +22,6 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:label="huehuuehuehuehue"
-            android:name=".NLS"
-            android:process=":NLS"
-            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" >
-            <intent-filter android:label="Imain">
-                <action android:name="android.service.notification.NotificationListenerService" />
-            </intent-filter>
-        </service>
-
         <service android:name=".MyAccessibilityService"
                  android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
                  android:label="D pee eye">

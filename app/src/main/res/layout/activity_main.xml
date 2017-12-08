@@ -84,16 +84,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textOff="Open Accesibility"
-                    android:textOn="Running"
+                    android:textOn="Disable this"
                     android:layout_width="0dp"/>
-
-                <Button
-                    android:id="@+id/btn_dummy"
-                    style="?metaButtonBarButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/dummy_button"/>
 
             </LinearLayout>
         </LinearLayout>
