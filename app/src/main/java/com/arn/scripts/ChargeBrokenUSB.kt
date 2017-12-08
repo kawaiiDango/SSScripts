@@ -12,7 +12,7 @@ class ChargeBrokenUSB : BroadcastReceiver() {
                 Main.runAsRoot(context, Main.FAST_CHARGE)
             }
             Intent.ACTION_CONFIGURATION_CHANGED -> {
-                Main.toast(context, intent.action)
+//                Main.toast(context, intent.action)
             }
         }
     }
