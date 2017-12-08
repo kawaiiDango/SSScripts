@@ -1,0 +1,102 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             xmlns:sample="http://schemas.android.com/apk/res-auto"
+             android:background="#0099cc"
+             tools:context="com.arn.scripts.Main">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+
+    <TextView
+        android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:keepScreenOn="true"
+        android:text="@string/dummy_content"
+        android:textColor="#6433b5e5"
+        android:textSize="50sp"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:orientation="vertical"
+            >
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+            <TextView
+                android:id="@+id/current_dpi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"/>
+
+            <com.pavelsikun.seekbarpreference.SeekBarPreferenceView
+                    android:id="@+id/split_dpi_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    sample:msbp_view_title="Split screen dpi (0 = stock)"
+                    sample:msbp_minValue="0"
+                    sample:msbp_maxValue="700"
+                    sample:msbp_interval="1"
+                    sample:msbp_measurementUnit="dpi"
+                    />
+
+                <com.pavelsikun.seekbarpreference.SeekBarPreferenceView
+                    android:id="@+id/normal_dpi_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    sample:msbp_view_title="Normal dpi (0 = stock)"
+                    sample:msbp_minValue="0"
+                    sample:msbp_maxValue="700"
+                    sample:msbp_interval="1"
+
+                    sample:msbp_measurementUnit="dpi"
+                    />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fullscreen_content_controls"
+                style="?metaButtonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|center_horizontal"
+                android:background="@color/black_overlay"
+                android:orientation="horizontal"
+                tools:ignore="UselessParent">
+
+                <ToggleButton
+                    android:id="@+id/btn_acc"
+                    style="?metaButtonBarButtonStyle"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textOff="Open Accesibility"
+                    android:textOn="Running"
+                    android:layout_width="0dp"/>
+
+                <Button
+                    android:id="@+id/btn_dummy"
+                    style="?metaButtonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/dummy_button"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+</FrameLayout>
