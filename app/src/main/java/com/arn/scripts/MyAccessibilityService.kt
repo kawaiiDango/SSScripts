@@ -17,8 +17,7 @@ class MyAccessibilityService : AccessibilityService() {
     override fun onServiceConnected() {
         super.onServiceConnected()
         pref = PreferenceManager.getDefaultSharedPreferences(this)
-        val iF = IntentFilter(Main.DA_BROADCAST)
-        registerReceiver(AccBroadcastReceiver(), iF)
+        registerReceiver(AccBroadcastReceiver(), IntentFilter(Main.DA_BROADCAST))
     }
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
 //        TYPE_SPLIT_SCREEN_DIVIDER
